@@ -1,3 +1,4 @@
+import 'package:decision_maker_v1/widgets/category_card.dart';
 import 'package:decision_maker_v1/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -46,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             height: size.height * 0.45,
             decoration: BoxDecoration(
-              color: Color(0xFFF5CEB8),
+              color: Color.fromRGBO(141, 245, 66, 100),
               // image: DecorationImage(
               //   alignment: Alignment.centerLeft,
               //   image: AssetImage("assets/images/cafe_icon.png"),
@@ -77,6 +78,36 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: Theme.of(context).textTheme.headline2,
                   ),
                   SearchBar(),
+                  Expanded(
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: .85,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      children: <Widget>[
+                        CategoryCard(
+                          title: "Cafe",
+                          imageTitle: "assets/images/cafe_icon.png",
+                          press: () {},
+                        ),
+                        CategoryCard(
+                          title: "Restaurant",
+                          imageTitle: "assets/images/restaurant_image.png",
+                          press: () {},
+                        ),
+                        CategoryCard(
+                          title: "Bar",
+                          imageTitle: "assets/images/bar_image.png",
+                          press: () {},
+                        ),
+                        CategoryCard(
+                          title: "Take Away",
+                          imageTitle: "assets/images/take_away_image.png",
+                          press: () {},
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
