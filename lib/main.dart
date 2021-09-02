@@ -41,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    bool temp = false;
     return Scaffold(
       body: Stack(
         children: <Widget>[
