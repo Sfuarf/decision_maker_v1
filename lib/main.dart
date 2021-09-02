@@ -1,4 +1,5 @@
 import 'package:decision_maker_v1/widgets/category_card.dart';
+import 'package:decision_maker_v1/widgets/place_card.dart';
 import 'package:decision_maker_v1/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,10 +39,46 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final key = GlobalKey<ScaffoldState>();
+  final TextEditingController _searchQuery = TextEditingController();
+  List<PlaceCard> _list = [];
+  List<PlaceCard> _searchList = [];
+
+  bool _IsSearching = false;
+  String _searchText = "";
+
+  _MyHomePageState() {
+    _searchQuery.addListener(() {
+      if (_searchQuery.text.isEmpty) {
+        setState(() {
+          _IsSearching = false;
+          _searchText = "";
+          _buildSearchList();
+        });
+      } else {
+        setState(() {
+          _IsSearching = true;
+          _searchText = _searchQuery.text;
+          _buildSearchList();
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _IsSearching = false;
+    init();
+  }
+
+  void init() {
+    _searchList = createPlaceCardList();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    bool temp = false;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -78,35 +115,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     "Choose Your Location!",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  SearchBar(),
+                  SearchBar(placeTypeSearch: _searchQuery),
                   Expanded(
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: .85,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                      children: <Widget>[
-                        CategoryCard(
-                          title: "Cafe",
-                          imageTitle: "assets/images/cafe_icon.png",
-                          press: () {},
-                        ),
-                        CategoryCard(
-                          title: "Restaurant",
-                          imageTitle: "assets/images/restaurant_image.png",
-                          press: () {},
-                        ),
-                        CategoryCard(
-                          title: "Bar",
-                          imageTitle: "assets/images/bar_image.png",
-                          press: () {},
-                        ),
-                        CategoryCard(
-                          title: "Take Away",
-                          imageTitle: "assets/images/take_away_image.png",
-                          press: () {},
-                        ),
-                      ],
+                    child: GridView.builder(
+                      itemCount: _searchList.length,
+                      itemBuilder: (context, index) {
+                        return CategoryCard(placeCard: _searchList[index]);
+                      },
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: .85,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                      ),
                     ),
                   ),
                 ],
@@ -116,6 +137,35 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
+  }
+
+  List<PlaceCard> _buildList() {
+    return _list; //_list.map((contact) =>  Uiitem(contact)).toList();
+  }
+
+  List<PlaceCard> _buildSearchList() {
+    if (_searchText.isEmpty) {
+      return _searchList =
+          _list; //_list.map((contact) =>  Uiitem(contact)).toList();
+    } else {
+      _searchList = _list
+          .where((element) =>
+              element.placeType
+                  .toLowerCase()
+                  .contains(_searchText.toLowerCase()) ||
+              element.placeType
+                  .toLowerCase()
+                  .contains(_searchText.toLowerCase()))
+          .toList();
+      print('${_searchList.length}');
+      return _searchList; //_searchList.map((contact) =>  Uiitem(contact)).toList();
+    }
+  }
+
+  void _handleSearchStart() {
+    setState(() {
+      _IsSearching = true;
+    });
   }
 }
 

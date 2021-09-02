@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
+  final TextEditingController placeTypeSearch;
+
+  SearchBar({required this.placeTypeSearch});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,6 +15,7 @@ class SearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(29.5),
       ),
       child: TextField(
+        controller: placeTypeSearch,
         decoration: InputDecoration(
           hintText: "Search",
           icon: Icon(Icons.search),
