@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 52,
                       width: 52,
                       decoration: BoxDecoration(
-                        color: Color(0xFFF2BEA1),
+                        color: Colors.grey,
                         shape: BoxShape.circle,
                       ),
                       child: SvgPicture.asset("assets/icons/menu.svg"),
