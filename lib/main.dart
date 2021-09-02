@@ -1,4 +1,5 @@
 import 'package:decision_maker_v1/widgets/category_card.dart';
+import 'package:decision_maker_v1/widgets/place_card.dart';
 import 'package:decision_maker_v1/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,10 +39,39 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final key = GlobalKey<ScaffoldState>();
+  final TextEditingController _searchQuery = TextEditingController();
+  List<PlaceCard> _searchList = [];
+  List<PlaceCard> _list = [];
+
+  String _searchText = "";
+
+  _MyHomePageState() {
+    _searchQuery.addListener(() {
+      if (_searchQuery.text.isEmpty) {
+        setState(() {
+          _searchText = "";
+          _searchList = buildSearchList(_searchText, _list);
+        });
+      } else {
+        setState(() {
+          _searchText = _searchQuery.text;
+          _searchList = buildSearchList(_searchText, _list);
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _list = createPlaceCardList();
+    _searchList = _list;
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    bool temp = false;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -75,38 +105,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Text(
-                    "Choose Your Location!",
+                    "Choose Your Venue!",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  SearchBar(),
+                  GestureDetector(
+                      onTap: () {},
+                      child: SearchBar(placeTypeSearch: _searchQuery)),
                   Expanded(
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: .85,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                      children: <Widget>[
-                        CategoryCard(
-                          title: "Cafe",
-                          imageTitle: "assets/images/cafe_icon.png",
-                          press: () {},
-                        ),
-                        CategoryCard(
-                          title: "Restaurant",
-                          imageTitle: "assets/images/restaurant_image.png",
-                          press: () {},
-                        ),
-                        CategoryCard(
-                          title: "Bar",
-                          imageTitle: "assets/images/bar_image.png",
-                          press: () {},
-                        ),
-                        CategoryCard(
-                          title: "Take Away",
-                          imageTitle: "assets/images/take_away_image.png",
-                          press: () {},
-                        ),
-                      ],
+                    child: GridView.builder(
+                      itemCount: _searchList.length,
+                      itemBuilder: (context, index) {
+                        return CategoryCard(placeCard: _searchList[index]);
+                      },
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: .85,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                      ),
                     ),
                   ),
                 ],
@@ -118,6 +134,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-
-// Comments?
