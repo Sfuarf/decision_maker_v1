@@ -41,25 +41,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final key = GlobalKey<ScaffoldState>();
   final TextEditingController _searchQuery = TextEditingController();
-  List<PlaceCard> _list = [];
   List<PlaceCard> _searchList = [];
+  List<PlaceCard> _list = [];
 
-  bool _IsSearching = false;
   String _searchText = "";
 
   _MyHomePageState() {
     _searchQuery.addListener(() {
       if (_searchQuery.text.isEmpty) {
         setState(() {
-          _IsSearching = false;
           _searchText = "";
-          _buildSearchList();
+          _searchList = buildSearchList(_searchText, _list);
         });
       } else {
         setState(() {
-          _IsSearching = true;
           _searchText = _searchQuery.text;
-          _buildSearchList();
+          _searchList = buildSearchList(_searchText, _list);
         });
       }
     });
@@ -68,12 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _IsSearching = false;
-    init();
-  }
-
-  void init() {
-    _searchList = createPlaceCardList();
+    _list = createPlaceCardList();
+    _searchList = _list;
   }
 
   @override
@@ -112,10 +105,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Text(
-                    "Choose Your Location!",
+                    "Choose Your Venue!",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  SearchBar(placeTypeSearch: _searchQuery),
+                  GestureDetector(
+                      onTap: () {},
+                      child: SearchBar(placeTypeSearch: _searchQuery)),
                   Expanded(
                     child: GridView.builder(
                       itemCount: _searchList.length,
@@ -138,36 +133,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  List<PlaceCard> _buildList() {
-    return _list; //_list.map((contact) =>  Uiitem(contact)).toList();
-  }
-
-  List<PlaceCard> _buildSearchList() {
-    if (_searchText.isEmpty) {
-      return _searchList =
-          _list; //_list.map((contact) =>  Uiitem(contact)).toList();
-    } else {
-      _searchList = _list
-          .where((element) =>
-              element.placeType
-                  .toLowerCase()
-                  .contains(_searchText.toLowerCase()) ||
-              element.placeType
-                  .toLowerCase()
-                  .contains(_searchText.toLowerCase()))
-          .toList();
-      print('${_searchList.length}');
-      return _searchList; //_searchList.map((contact) =>  Uiitem(contact)).toList();
-    }
-  }
-
-  void _handleSearchStart() {
-    setState(() {
-      _IsSearching = true;
-    });
-  }
 }
-
-
-// Comments?

@@ -58,3 +58,21 @@ List<PlaceCard> createPlaceCardList() {
 
   return _list;
 }
+
+List<PlaceCard> buildSearchList(String searchText, List<PlaceCard> list) {
+  List<PlaceCard> searchList = [];
+
+  if (searchText.isEmpty) {
+    return searchList = list;
+  } else {
+    searchList = list
+        .where((element) =>
+            element.placeType
+                .toLowerCase()
+                .contains(searchText.toLowerCase()) ||
+            element.placeType.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+    print('${searchList.length}');
+    return searchList; //_searchList.map((contact) =>  Uiitem(contact)).toList();
+  }
+}
