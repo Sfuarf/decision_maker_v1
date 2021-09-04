@@ -27,8 +27,9 @@ class _CategoryCardState extends State<CategoryCard> {
       child: Container(
         // padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: backColor,
+          color: Colors.grey,
           borderRadius: BorderRadius.circular(13),
+          border: Border.all(color: backColor, width: 5),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 17),
@@ -41,13 +42,15 @@ class _CategoryCardState extends State<CategoryCard> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
+            // When the card is selected, change the background colour
+            // Update the internal 'selected' tag so this state will be saved and called back
             onTap: () {
               setState(() {
                 widget.placeCard.selected = !widget.placeCard.selected;
 
                 backColor = Colors.blue;
                 if (widget.placeCard.selected) {
-                  backColor = Colors.lightBlue;
+                  backColor = Colors.lightGreen;
                   print('Selected is True');
                 } else {
                   backColor = Colors.grey;

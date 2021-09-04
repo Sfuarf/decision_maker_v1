@@ -109,6 +109,11 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
                       ),
                     ),
                   ),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Find Random Location')),
+                  )
                 ],
               ),
             ),
