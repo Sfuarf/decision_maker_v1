@@ -43,17 +43,18 @@ class _CategoryCardState extends State<CategoryCard> {
           child: InkWell(
             onTap: () {
               setState(() {
-                selected = !selected;
+                widget.placeCard.selected = !widget.placeCard.selected;
+
                 backColor = Colors.blue;
-                if (selected) {
+                if (widget.placeCard.selected) {
                   backColor = Colors.lightBlue;
                   print('Selected is True');
                 } else {
                   backColor = Colors.grey;
                   print('Selected is not True');
                 }
-                widget.applicationBlock
-                    .modifyPlaceType(widget.placeCard.title, selected);
+                widget.applicationBlock.modifyPlaceType(
+                    widget.placeCard.title, widget.placeCard.selected);
               });
             },
             child: Padding(

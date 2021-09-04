@@ -1,4 +1,3 @@
-import 'package:decision_maker_v1/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 
 class PlaceCard {
@@ -7,6 +6,7 @@ class PlaceCard {
   final String title;
   final String placeType;
   final VoidCallback press;
+  bool selected;
 
   PlaceCard({
     required this.id,
@@ -14,6 +14,7 @@ class PlaceCard {
     required this.title,
     required this.placeType,
     required this.press,
+    required this.selected,
   });
 }
 
@@ -27,6 +28,7 @@ List<PlaceCard> createPlaceCardList() {
       title: 'Cafe',
       placeType: 'cafe',
       press: () {},
+      selected: false,
     ),
   );
   _list.add(
@@ -36,6 +38,7 @@ List<PlaceCard> createPlaceCardList() {
       title: 'Restaurant',
       placeType: 'restaurant',
       press: () {},
+      selected: false,
     ),
   );
   _list.add(
@@ -45,6 +48,7 @@ List<PlaceCard> createPlaceCardList() {
       title: 'Bar',
       placeType: 'bar',
       press: () {},
+      selected: false,
     ),
   );
   _list.add(
@@ -54,6 +58,7 @@ List<PlaceCard> createPlaceCardList() {
       title: 'Take Away',
       placeType: 'meal_take_away',
       press: () {},
+      selected: false,
     ),
   );
 
