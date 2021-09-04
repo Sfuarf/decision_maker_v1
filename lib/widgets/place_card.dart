@@ -1,3 +1,4 @@
+import 'package:decision_maker_v1/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 
 class PlaceCard {

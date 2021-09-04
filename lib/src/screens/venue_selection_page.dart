@@ -1,3 +1,4 @@
+import 'package:decision_maker_v1/blocks/application_block.dart';
 import 'package:decision_maker_v1/widgets/category_card.dart';
 import 'package:decision_maker_v1/widgets/place_card.dart';
 import 'package:decision_maker_v1/widgets/search_bar.dart';
@@ -5,15 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class VenueSelectionPage extends StatefulWidget {
-  VenueSelectionPage({Key? key, required this.title}) : super(key: key);
+  VenueSelectionPage({
+    Key? key,
+    required this.title,
+    required this.applicationBlock,
+  }) : super(key: key);
 
   final String title;
+  final ApplicationBlock applicationBlock;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _VenueSelectionPage createState() => _VenueSelectionPage();
 }
 
-class _MyHomePageState extends State<VenueSelectionPage> {
+class _VenueSelectionPage extends State<VenueSelectionPage> {
   final key = GlobalKey<ScaffoldState>();
   final TextEditingController _searchQuery = TextEditingController();
   List<PlaceCard> _searchList = [];
@@ -21,7 +27,7 @@ class _MyHomePageState extends State<VenueSelectionPage> {
 
   String _searchText = "";
 
-  _MyHomePageState() {
+  _VenueSelectionPage() {
     _searchQuery.addListener(() {
       if (_searchQuery.text.isEmpty) {
         setState(() {
@@ -90,7 +96,10 @@ class _MyHomePageState extends State<VenueSelectionPage> {
                     child: GridView.builder(
                       itemCount: _searchList.length,
                       itemBuilder: (context, index) {
-                        return CategoryCard(placeCard: _searchList[index]);
+                        return CategoryCard(
+                          placeCard: _searchList[index],
+                          applicationBlock: widget.applicationBlock,
+                        );
                       },
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
