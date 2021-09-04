@@ -60,10 +60,6 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
             height: size.height * 0.45,
             decoration: BoxDecoration(
               color: Color.fromRGBO(141, 245, 66, 100),
-              // image: DecorationImage(
-              //   alignment: Alignment.centerLeft,
-              //   image: AssetImage("assets/images/cafe_icon.png"),
-              // ),
             ),
           ),
           SafeArea(
@@ -89,9 +85,7 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
                     "Choose Your Venue!?",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  GestureDetector(
-                      onTap: () {},
-                      child: SearchBar(placeTypeSearch: _searchQuery)),
+                  SearchBar(placeTypeSearch: _searchQuery),
                   Expanded(
                     child: GridView.builder(
                       itemCount: _searchList.length,

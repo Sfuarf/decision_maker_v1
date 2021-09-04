@@ -7,6 +7,7 @@ class PlaceCard {
   final String placeType;
   final VoidCallback press;
   bool selected;
+  Color backGroundColor;
 
   PlaceCard({
     required this.id,
@@ -15,6 +16,7 @@ class PlaceCard {
     required this.placeType,
     required this.press,
     required this.selected,
+    required this.backGroundColor,
   });
 }
 
@@ -29,6 +31,7 @@ List<PlaceCard> createPlaceCardList() {
       placeType: 'cafe',
       press: () {},
       selected: false,
+      backGroundColor: Colors.grey,
     ),
   );
   _list.add(
@@ -39,6 +42,7 @@ List<PlaceCard> createPlaceCardList() {
       placeType: 'restaurant',
       press: () {},
       selected: false,
+      backGroundColor: Colors.grey,
     ),
   );
   _list.add(
@@ -49,6 +53,7 @@ List<PlaceCard> createPlaceCardList() {
       placeType: 'bar',
       press: () {},
       selected: false,
+      backGroundColor: Colors.grey,
     ),
   );
   _list.add(
@@ -59,6 +64,7 @@ List<PlaceCard> createPlaceCardList() {
       placeType: 'meal_take_away',
       press: () {},
       selected: false,
+      backGroundColor: Colors.grey,
     ),
   );
 

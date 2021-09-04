@@ -17,8 +17,7 @@ class CategoryCard extends StatefulWidget {
 }
 
 class _CategoryCardState extends State<CategoryCard> {
-  static bool selected = false;
-  static Color backColor = Colors.grey;
+  Color backColor = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +26,9 @@ class _CategoryCardState extends State<CategoryCard> {
       child: Container(
         // padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.grey,
+          color: widget.placeCard.backGroundColor,
           borderRadius: BorderRadius.circular(13),
-          border: Border.all(color: backColor, width: 5),
+          // border: Border.all(color: backColor, width: 5),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 17),
@@ -45,20 +44,21 @@ class _CategoryCardState extends State<CategoryCard> {
             // When the card is selected, change the background colour
             // Update the internal 'selected' tag so this state will be saved and called back
             onTap: () {
+              print('ON TAP BEING TRIGGERED!');
               setState(() {
                 widget.placeCard.selected = !widget.placeCard.selected;
 
                 backColor = Colors.blue;
                 if (widget.placeCard.selected) {
-                  backColor = Colors.lightGreen;
+                  widget.placeCard.backGroundColor = Colors.lightGreen;
                   print('Selected is True');
                 } else {
-                  backColor = Colors.grey;
+                  widget.placeCard.backGroundColor = Colors.grey;
                   print('Selected is not True');
                 }
-                widget.applicationBlock.modifyPlaceType(
-                    widget.placeCard.title, widget.placeCard.selected);
               });
+              widget.applicationBlock.modifyPlaceType(
+                  widget.placeCard.title, widget.placeCard.selected);
             },
             child: Padding(
               padding: const EdgeInsets.all(20.0),

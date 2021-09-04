@@ -1,6 +1,5 @@
 import 'package:decision_maker_v1/blocks/application_block.dart';
 import 'package:decision_maker_v1/src/screens/start_page.dart';
-import 'package:decision_maker_v1/src/screens/venue_selection_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'constants.dart';
