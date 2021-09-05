@@ -20,6 +20,16 @@ class SearchBar extends StatelessWidget {
           hintText: "Search",
           icon: Icon(Icons.search),
           border: InputBorder.none,
+          suffixIcon: IconButton(
+              onPressed: () {
+                placeTypeSearch.clear();
+                FocusScopeNode currentFocus = FocusScope.of(context);
+
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              icon: Icon(Icons.clear)),
         ),
       ),
     );

@@ -68,6 +68,18 @@ List<PlaceCard> createPlaceCardList() {
     ),
   );
 
+  _list.add(
+    PlaceCard(
+      id: '5',
+      imageTitle: 'assets/images/bakery_image.png',
+      title: 'Bakery',
+      placeType: 'bakery',
+      press: () {},
+      selected: false,
+      backGroundColor: Colors.grey,
+    ),
+  );
+
   return _list;
 }
 
