@@ -1,4 +1,5 @@
 import 'package:decision_maker_v1/blocks/application_block.dart';
+import 'package:decision_maker_v1/src/screens/start_page.dart';
 import 'package:decision_maker_v1/widgets/category_card.dart';
 import 'package:decision_maker_v1/widgets/place_card.dart';
 import 'package:decision_maker_v1/widgets/search_bar.dart';
@@ -70,15 +71,23 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
                 children: <Widget>[
                   Align(
                     alignment: Alignment.topRight,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 52,
-                      width: 52,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => StartScreen()));
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 52,
+                        width: 52,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset("assets/icons/menu.svg"),
                       ),
-                      child: SvgPicture.asset("assets/icons/menu.svg"),
                     ),
                   ),
                   Text(
