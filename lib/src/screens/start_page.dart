@@ -1,7 +1,6 @@
 import 'package:decision_maker_v1/blocks/application_block.dart';
 import 'package:decision_maker_v1/src/screens/venue_selection_page.dart';
 import 'package:decision_maker_v1/widgets/location_search_bar.dart';
-import 'package:decision_maker_v1/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -85,33 +84,3 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 }
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-//       new Center(),
-//       floatingActionButton: new FloatingActionButton(
-//         onPressed: () {
-//           Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                   builder: (context) => VenueSelectionPage(
-//                       title: 'Test', applicationBlock: applicationBlock)));
-//         },
-//         tooltip: 'Increment',
-//         child: new Icon(Icons.add),
-//       ), // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// }
