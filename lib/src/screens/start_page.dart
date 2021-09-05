@@ -36,46 +36,51 @@ class _StartScreenState extends State<StartScreen> {
               color: Color.fromRGBO(141, 245, 66, 100),
             ),
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 52,
-                      width: 52,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
+          SingleChildScrollView(
+            child: Container(
+              child: SafeArea(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 52,
+                          width: 52,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            shape: BoxShape.circle,
+                          ),
+                          child: SvgPicture.asset("assets/icons/menu.svg"),
+                        ),
                       ),
-                      child: SvgPicture.asset("assets/icons/menu.svg"),
-                    ),
+                      Text(
+                        "Select Your Location.",
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                      LocationSearchBar(
+                        placeTypeSearch: _textController,
+                        applicationBlock: applicationBlock,
+                      ),
+                      Center(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VenueSelectionPage(
+                                          title: 'Test',
+                                          applicationBlock: applicationBlock)));
+                            },
+                            child: const Text('Find Random Location')),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "Select Your Location.",
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                  LocationSearchBar(
-                    placeTypeSearch: _textController,
-                    applicationBlock: applicationBlock,
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VenueSelectionPage(
-                                      title: 'Test',
-                                      applicationBlock: applicationBlock)));
-                        },
-                        child: const Text('Find Random Location')),
-                  ),
-                ],
+                ),
               ),
             ),
           )
