@@ -58,7 +58,7 @@ class _CategoryCardState extends State<CategoryCard> {
                 }
               });
               widget.applicationBlock.modifyPlaceType(
-                  widget.placeCard.title, widget.placeCard.selected);
+                  widget.placeCard.placeType, widget.placeCard.selected);
             },
             child: Padding(
               padding: const EdgeInsets.all(20.0),
