@@ -1,8 +1,11 @@
 import 'package:decision_maker_v1/blocks/application_block.dart';
 import 'package:decision_maker_v1/src/screens/venue_selection_page.dart';
 import 'package:decision_maker_v1/widgets/location_search_bar.dart';
+import 'package:decision_maker_v1/widgets/use_current_location_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:progress_state_button/iconed_button.dart';
+import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
 
 class StartScreen extends StatefulWidget {
@@ -26,6 +29,7 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     final applicationBlock = Provider.of<ApplicationBlock>(context);
     var size = MediaQuery.of(context).size;
+    ButtonState useLocationButtonState = ButtonState.idle;
 
     return Scaffold(
       body: Stack(
@@ -66,18 +70,15 @@ class _StartScreenState extends State<StartScreen> {
                         placeTypeSearch: _textController,
                         applicationBlock: applicationBlock,
                       ),
-                      Center(
-                        child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => VenueSelectionPage(
-                                          title: 'Test',
-                                          applicationBlock: applicationBlock)));
-                            },
-                            child: const Text('Find Random Location')),
+                      Text(
+                        'OR',
+                        style: Theme.of(context).textTheme.headline2,
                       ),
+                      Center(
+                          child: ProgressTrackingButton(
+                        applicationBlock: applicationBlock,
+                        press: () {},
+                      )),
                     ],
                   ),
                 ),
