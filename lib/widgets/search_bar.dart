@@ -25,9 +25,7 @@ class SearchBar extends StatelessWidget {
                 placeTypeSearch.clear();
                 FocusScopeNode currentFocus = FocusScope.of(context);
 
-                if (!currentFocus.hasPrimaryFocus) {
-                  currentFocus.unfocus();
-                }
+                currentFocus.unfocus();
               },
               icon: Icon(Icons.clear)),
         ),
