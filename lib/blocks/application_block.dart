@@ -16,6 +16,7 @@ class ApplicationBlock with ChangeNotifier {
 
   // Stream Controllers
   StreamController<Place> selectedLocation = StreamController<Place>();
+  StreamController<Position> subCurrentPosition = StreamController<Position>();
 
   // Variables
   late List<PlaceSearch> searchResults;
@@ -26,7 +27,7 @@ class ApplicationBlock with ChangeNotifier {
 
 // Define empty list of strings to hold the place types selected.
 
-  late Position currentLocation;
+  late Position currentPosition;
   late Position selectedPosition;
   List<String> placeTypes = [];
 
@@ -43,7 +44,7 @@ class ApplicationBlock with ChangeNotifier {
     currentPositionFound = false;
     print('Making it here?');
 
-    currentLocation =
+    currentPosition =
         await geolocatorService.getCurrentLocation().then((value) {
       currentPositionFound = true;
 
@@ -53,6 +54,8 @@ class ApplicationBlock with ChangeNotifier {
 
       return value;
     });
+
+    subCurrentPosition.add(currentPosition);
     // Define new Place (for using _goToPlace Function)
 
     currentPlace = Place(
@@ -60,8 +63,8 @@ class ApplicationBlock with ChangeNotifier {
         address: '',
         geometry: Geometry(
             location: Location(
-                lat: currentLocation.latitude,
-                lng: currentLocation.longitude)));
+                lat: currentPosition.latitude,
+                lng: currentPosition.longitude)));
   }
 
   modifyPlaceType(String value, bool selected) {
@@ -82,13 +85,11 @@ class ApplicationBlock with ChangeNotifier {
 
   // Change the location to the one selected from the autocompleted list
   setSelectedLocation(String placeId) async {
-    print(placeId);
     // Search Google for the Place information given the placeId tag
     // This placeId is given from the autocomplete search
     // This then returns Lat, Long etc. values to locate on the map
     selectedPlace = await placesService.getPlace(placeId).then((value) {
       selectedPositionFound = true;
-      print('Finding new Location?');
       return value;
     });
     selectedLocation.add(selectedPlace);
@@ -99,6 +100,7 @@ class ApplicationBlock with ChangeNotifier {
   @override
   void dispose() {
     selectedLocation.close();
+    subCurrentPosition.close();
     super.dispose();
   }
 }

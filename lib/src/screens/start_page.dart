@@ -31,7 +31,13 @@ class _StartScreenState extends State<StartScreen> {
     // ignore: cancel_subscriptions
     StreamSubscription locationSubscription =
         applicationBlock.selectedLocation.stream.listen((place) {
-      _goToPlace(place);
+      _goToPlace(place.geometry.location.lat, place.geometry.location.lng);
+    });
+
+    // ignore: cancel_subscriptions
+    StreamSubscription currentLocationSubscription =
+        applicationBlock.subCurrentPosition.stream.listen((posistion) {
+      _goToPlace(posistion.latitude, posistion.longitude);
     });
 
     super.initState();
@@ -89,7 +95,6 @@ class _StartScreenState extends State<StartScreen> {
                       Center(
                         child: ProgressTrackingButton(
                           applicationBlock: applicationBlock,
-                          press: () {},
                         ),
                       ),
                       (!applicationBlock.currentPositionFound &&
@@ -110,12 +115,12 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   // Move Google Maps to inputted place
-  Future<void> _goToPlace(Place place) async {
+  Future<void> _goToPlace(double lat, double long) async {
     final GoogleMapController controller = await _mapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(
-          place.geometry.location.lat,
-          place.geometry.location.lng,
+          lat,
+          long,
         ),
         zoom: 14)));
   }

@@ -24,8 +24,8 @@ class _GoogleMapsStartPageState extends State<GoogleMapsStartPage> {
         height: 300.0,
         child: GoogleMap(
           initialCameraPosition: CameraPosition(
-            target: LatLng(widget.applicationBlock.currentLocation.latitude,
-                widget.applicationBlock.currentLocation.longitude),
+            target: LatLng(widget.applicationBlock.currentPosition.latitude,
+                widget.applicationBlock.currentPosition.longitude),
             zoom: 14,
           ),
           onMapCreated: (GoogleMapController controller) {

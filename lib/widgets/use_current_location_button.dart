@@ -1,21 +1,15 @@
-import 'dart:async';
-
 import 'package:decision_maker_v1/blocks/application_block.dart';
-import 'package:decision_maker_v1/models/place.dart';
 import 'package:decision_maker_v1/services/geolocator_services.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 class ProgressTrackingButton extends StatefulWidget {
-  final VoidCallback press;
   final ApplicationBlock applicationBlock;
 
   const ProgressTrackingButton({
     Key? key,
     required this.applicationBlock,
-    required this.press,
   }) : super(key: key);
 
   @override
