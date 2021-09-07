@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:decision_maker_v1/blocks/application_block.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 
 class GoogleMapsStartPage extends StatefulWidget {
   final ApplicationBlock applicationBlock;
@@ -53,10 +52,7 @@ class _GoogleMapsStartPageState extends State<GoogleMapsStartPage> {
         ),
       );
     } else {
-      return Container(
-        height: 300,
-        child: CircularProgressIndicator(),
-      );
+      return Container();
     }
   }
 }

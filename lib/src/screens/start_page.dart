@@ -1,5 +1,4 @@
 import 'package:decision_maker_v1/blocks/application_block.dart';
-import 'package:decision_maker_v1/models/place.dart';
 import 'package:decision_maker_v1/src/screens/venue_selection_page.dart';
 import 'package:decision_maker_v1/widgets/google_maps_start_page.dart';
 import 'package:decision_maker_v1/widgets/location_search_bar.dart';
@@ -24,18 +23,21 @@ class _StartScreenState extends State<StartScreen> {
   Completer<GoogleMapController> _mapController = Completer();
   var _textController = TextEditingController();
 
+  late StreamSubscription locationSubscription;
+  late StreamSubscription currentLocationSubscription;
+
   void initState() {
     final applicationBlock =
         Provider.of<ApplicationBlock>(context, listen: false);
 
     // ignore: cancel_subscriptions
-    StreamSubscription locationSubscription =
+    locationSubscription =
         applicationBlock.selectedLocation.stream.listen((place) {
       _goToPlace(place.geometry.location.lat, place.geometry.location.lng);
     });
 
     // ignore: cancel_subscriptions
-    StreamSubscription currentLocationSubscription =
+    currentLocationSubscription =
         applicationBlock.subCurrentPosition.stream.listen((posistion) {
       _goToPlace(posistion.latitude, posistion.longitude);
     });
@@ -97,12 +99,51 @@ class _StartScreenState extends State<StartScreen> {
                           applicationBlock: applicationBlock,
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GoogleMapsStartPage(
+                            applicationBlock: applicationBlock,
+                            mapController: _mapController),
+                      ),
                       (!applicationBlock.currentPositionFound &&
                               !applicationBlock.selectedPositionFound)
-                          ? CircularProgressIndicator()
-                          : GoogleMapsStartPage(
-                              applicationBlock: applicationBlock,
-                              mapController: _mapController)
+                          ? Container()
+                          : Container(
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton.icon(
+                                    icon: Icon(Icons.check),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white),
+                                        foregroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.black),
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                        ))),
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VenueSelectionPage(
+                                                      title: 'The Title',
+                                                      applicationBlock:
+                                                          applicationBlock)));
+                                      applicationBlock.currentPositionFound =
+                                          false;
+                                      applicationBlock.selectedPositionFound =
+                                          false;
+                                    },
+                                    label: Text('Done'),
+                                  )),
+                            )
                     ],
                   ),
                 ),
@@ -125,14 +166,10 @@ class _StartScreenState extends State<StartScreen> {
         zoom: 14)));
   }
 
-  // Move Google Maps to inputted place
-  Future<void> _goToPosition(Position position) async {
-    final GoogleMapController controller = await _mapController.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(
-          position.latitude,
-          position.longitude,
-        ),
-        zoom: 14)));
+  @override
+  void dispose() async {
+    await locationSubscription.cancel();
+    await currentLocationSubscription.cancel();
+    super.dispose();
   }
 }

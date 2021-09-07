@@ -15,8 +15,10 @@ class ApplicationBlock with ChangeNotifier {
   final placesService = PlacesService();
 
   // Stream Controllers
-  StreamController<Place> selectedLocation = StreamController<Place>();
-  StreamController<Position> subCurrentPosition = StreamController<Position>();
+  StreamController<Place> selectedLocation =
+      StreamController<Place>.broadcast();
+  StreamController<Position> subCurrentPosition =
+      StreamController<Position>.broadcast();
 
   // Variables
   late List<PlaceSearch> searchResults;
@@ -24,6 +26,8 @@ class ApplicationBlock with ChangeNotifier {
   // Status Variables
   bool currentPositionFound = false;
   bool selectedPositionFound = false;
+  // Status to show if using current position or selected position
+  String currentPositonSelectedPosition = 'Neither';
 
 // Define empty list of strings to hold the place types selected.
 
@@ -54,6 +58,8 @@ class ApplicationBlock with ChangeNotifier {
 
       return value;
     });
+
+    currentPositonSelectedPosition = 'Current';
 
     subCurrentPosition.add(currentPosition);
     // Define new Place (for using _goToPlace Function)
@@ -93,6 +99,7 @@ class ApplicationBlock with ChangeNotifier {
       return value;
     });
     selectedLocation.add(selectedPlace);
+    currentPositonSelectedPosition = 'Selected';
     // initialPosition = sLocation;
     notifyListeners();
   }
