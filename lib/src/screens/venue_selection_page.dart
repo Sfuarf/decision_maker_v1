@@ -119,13 +119,14 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
 
                           final snackBar = SnackBar(
                             content: Text(
-                                'The Chosen Place is: ${widget.applicationBlock.finalSelectedDestination}'),
+                                'The Chosen Place is: ${widget.applicationBlock.finalSelectedDestination}. The address is ${widget.applicationBlock.selectedAttraction.address}'),
                             action: SnackBarAction(
                               label: 'Undo',
                               onPressed: () {},
                             ),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          widget.applicationBlock.placeTypes = [];
                         },
                         child: const Text('Find Random Location')),
                   )

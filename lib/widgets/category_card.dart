@@ -44,17 +44,14 @@ class _CategoryCardState extends State<CategoryCard> {
             // When the card is selected, change the background colour
             // Update the internal 'selected' tag so this state will be saved and called back
             onTap: () {
-              print('ON TAP BEING TRIGGERED!');
               setState(() {
                 widget.placeCard.selected = !widget.placeCard.selected;
 
                 backColor = Colors.blue;
                 if (widget.placeCard.selected) {
                   widget.placeCard.backGroundColor = Colors.lightGreen;
-                  print('Selected is True');
                 } else {
                   widget.placeCard.backGroundColor = Colors.grey;
-                  print('Selected is not True');
                 }
               });
               widget.applicationBlock.modifyPlaceType(

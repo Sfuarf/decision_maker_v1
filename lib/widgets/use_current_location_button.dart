@@ -39,7 +39,7 @@ class _ProgressTrackingButtonState extends State<ProgressTrackingButton> {
                 Icons.check_circle,
                 color: Colors.white,
               ),
-              color: Colors.green.shade400)
+              color: Colors.green.shade400),
         },
         onPressed: () async {
           var tempBool = await GeolocatorService().checkCurrentPermissions();

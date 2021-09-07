@@ -136,10 +136,6 @@ class _StartScreenState extends State<StartScreen> {
                                                       title: 'The Title',
                                                       applicationBlock:
                                                           applicationBlock)));
-                                      applicationBlock.currentPositionFound =
-                                          false;
-                                      applicationBlock.selectedPositionFound =
-                                          false;
                                     },
                                     label: Text('Done'),
                                   )),

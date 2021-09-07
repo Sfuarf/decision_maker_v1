@@ -59,16 +59,18 @@ class ApplicationBlock with ChangeNotifier {
     currentPositionFound = false;
     print('Making it here?');
 
-    currentPosition =
-        await geolocatorService.getCurrentLocation().then((value) {
-      currentPositionFound = true;
+    if (!currentPositionFound) {
+      currentPosition =
+          await geolocatorService.getCurrentLocation().then((value) {
+        currentPositionFound = true;
 
-      print('Current Loaction Found');
+        print('Current Loaction Found');
 
-      notifyListeners();
+        notifyListeners();
 
-      return value;
-    });
+        return value;
+      });
+    }
 
     currentPositonSelectedPosition = 'Current';
 
@@ -133,6 +135,9 @@ class ApplicationBlock with ChangeNotifier {
       // Local variable for future reference - might be deleted once 'Place' format is used!
       finalSelectedPlaceType = selectedPlaceType;
       print(selectedPlaceType);
+      if (placeTypes.length < 1) {
+        print('THIS LIST IS EMPTY!');
+      }
 
       var places = await placesService
           .getAttractions(intialPlace.geometry.location.lat,
