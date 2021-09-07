@@ -1,3 +1,4 @@
+import 'package:decision_maker_v1/models/attraction.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -71,5 +72,36 @@ class PlacesService {
     // var jsonStatus = json['status'] as String;
 
     return jsonResults.map((place) => Place.fromJson(place)).toList();
+  }
+
+  // For Attractions - not autocomplete!!
+  Future<List<Attraction>> getAttractions(
+      double lat, double lon, String placeType) async {
+    String openCondition = '';
+    // String openCondition = '&opennow';
+
+    Uri url = Uri.parse(
+        'https://maps.googleapis.com/maps/api/place/textsearch/json?type=$placeType&location=$lat,$lon&rankby=distance&key=$key$openCondition');
+
+    print(url);
+
+    var response = await http.get(url);
+    var json = convert.jsonDecode(response.body);
+    var jsonResults = json['results'] as List;
+    var jsonStatus = json['status'] as String;
+
+    // Adding error checking for UI reference
+    if (jsonStatus == 'OK') {
+      placesValidResult = true;
+      print('The Places are Being Found!');
+      print(jsonResults.length);
+    }
+    if (jsonStatus == 'INVALID_REQUEST') {
+      placesValidResult = false;
+      print('This is an invalid request');
+    }
+    // var jsonStatus = json['status'] as String;
+
+    return jsonResults.map((place) => Attraction.fromJson(place)).toList();
   }
 }

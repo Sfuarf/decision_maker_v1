@@ -1,18 +1,22 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:decision_maker_v1/models/attraction.dart';
 import 'package:decision_maker_v1/models/geometry.dart';
 import 'package:decision_maker_v1/models/location.dart';
 import 'package:decision_maker_v1/models/place.dart';
 import 'package:decision_maker_v1/models/place_search.dart';
 import 'package:decision_maker_v1/services/geolocator_services.dart';
+import 'package:decision_maker_v1/services/markers_service.dart';
 import 'package:decision_maker_v1/services/places_service.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ApplicationBlock with ChangeNotifier {
   final geolocatorService = GeolocatorService();
   final placesService = PlacesService();
+  final markerService = MarkerService();
 
   // Stream Controllers
   StreamController<Place> selectedLocation =
@@ -29,6 +33,11 @@ class ApplicationBlock with ChangeNotifier {
   // Status to show if using current position or selected position
   String currentPositonSelectedPosition = 'Neither';
 
+  String finalSelectedDestination = '';
+  String finalSelectedPlaceType = '';
+
+  late List<Marker> markers = [];
+
 // Define empty list of strings to hold the place types selected.
 
   late Position currentPosition;
@@ -36,9 +45,11 @@ class ApplicationBlock with ChangeNotifier {
   List<String> placeTypes = [];
 
   // This is a work-around! Needs to be fixed in the future!
-  late Place initialPosition;
+  late Place intialPlace;
   late Place selectedPlace;
   late Place currentPlace;
+
+  late Attraction selectedAttraction;
 
   late Place newPlaceSelected;
 
@@ -71,6 +82,8 @@ class ApplicationBlock with ChangeNotifier {
             location: Location(
                 lat: currentPosition.latitude,
                 lng: currentPosition.longitude)));
+
+    intialPlace = currentPlace;
   }
 
   modifyPlaceType(String value, bool selected) {
@@ -99,8 +112,54 @@ class ApplicationBlock with ChangeNotifier {
       return value;
     });
     selectedLocation.add(selectedPlace);
+    intialPlace = selectedPlace;
     currentPositonSelectedPosition = 'Selected';
     // initialPosition = sLocation;
+    notifyListeners();
+  }
+
+  searchPlace() async {
+    if (placeTypes.isEmpty) {
+      finalSelectedDestination = '';
+      finalSelectedPlaceType = '';
+      return [];
+    } else {
+      // Chose random index of place types selected
+      Random randomPlaceType = new Random();
+      int randomPlaceIndex = randomPlaceType.nextInt((placeTypes.length));
+
+      // Selected type is then passed into the google search
+      var selectedPlaceType = placeTypes[randomPlaceIndex];
+      // Local variable for future reference - might be deleted once 'Place' format is used!
+      finalSelectedPlaceType = selectedPlaceType;
+      print(selectedPlaceType);
+
+      var places = await placesService
+          .getAttractions(intialPlace.geometry.location.lat,
+              intialPlace.geometry.location.lng, selectedPlaceType)
+          .then((value) {
+        markers = [];
+
+        // Randomly select an index from the outputted list!
+        Random randomPlaceIndex = new Random();
+        int randomIndex = randomPlaceIndex.nextInt((value.length));
+
+        finalSelectedDestination = value[randomIndex].name;
+        selectedAttraction = value[randomIndex];
+
+        if (value.length > 0) {
+          var newMarker =
+              markerService.createMarkerFromPlace(value[randomIndex]);
+          markers.add(newMarker);
+        }
+
+        return value;
+      }).onError((error, stackTrace) {
+        print('The string being passed was: $finalSelectedPlaceType');
+        print('This is the current error occuring $error');
+        return [];
+      });
+    }
     notifyListeners();
   }
 

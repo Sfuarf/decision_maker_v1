@@ -114,7 +114,19 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
                   ),
                   Center(
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await widget.applicationBlock.searchPlace();
+
+                          final snackBar = SnackBar(
+                            content: Text(
+                                'The Chosen Place is: ${widget.applicationBlock.finalSelectedDestination}'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {},
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
                         child: const Text('Find Random Location')),
                   )
                 ],
