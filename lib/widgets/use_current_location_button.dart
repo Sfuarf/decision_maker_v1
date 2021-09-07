@@ -1,4 +1,5 @@
 import 'package:decision_maker_v1/blocks/application_block.dart';
+import 'package:decision_maker_v1/services/geolocator_services.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
@@ -43,13 +44,21 @@ class _ProgressTrackingButtonState extends State<ProgressTrackingButton> {
               color: Colors.green.shade400)
         },
         onPressed: () async {
-          setState(() {
-            stateTextWithIcon = ButtonState.loading;
-          });
-          await widget.applicationBlock.setCurrentLocation();
+          var tempBool = await GeolocatorService().checkCurrentPermissions();
 
-          if (widget.applicationBlock.currentPositionFound) {
-            stateTextWithIcon = ButtonState.success;
+          if (tempBool) {
+            setState(() {
+              stateTextWithIcon = ButtonState.loading;
+            });
+            await widget.applicationBlock.setCurrentLocation();
+
+            if (widget.applicationBlock.currentPositionFound) {
+              stateTextWithIcon = ButtonState.success;
+            }
+          } else {
+            setState(() {
+              stateTextWithIcon = ButtonState.fail;
+            });
           }
         },
         state: stateTextWithIcon);

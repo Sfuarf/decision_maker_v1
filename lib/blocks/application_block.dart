@@ -42,9 +42,6 @@ class ApplicationBlock with ChangeNotifier {
       notifyListeners();
 
       return value;
-    }).onError((error, stackTrace) {
-      print('This is the current error occuring $error');
-      return currentLocation;
     });
   }
 
