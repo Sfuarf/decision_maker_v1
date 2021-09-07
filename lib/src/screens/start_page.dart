@@ -1,12 +1,17 @@
 import 'package:decision_maker_v1/blocks/application_block.dart';
+import 'package:decision_maker_v1/models/place.dart';
 import 'package:decision_maker_v1/src/screens/venue_selection_page.dart';
+import 'package:decision_maker_v1/widgets/google_maps_start_page.dart';
 import 'package:decision_maker_v1/widgets/location_search_bar.dart';
 import 'package:decision_maker_v1/widgets/use_current_location_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -16,11 +21,18 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
+  Completer<GoogleMapController> _mapController = Completer();
   var _textController = TextEditingController();
 
   void initState() {
     final applicationBlock =
         Provider.of<ApplicationBlock>(context, listen: false);
+
+    // ignore: cancel_subscriptions
+    StreamSubscription locationSubscription =
+        applicationBlock.selectedLocation.stream.listen((place) {
+      _goToPlace(place);
+    });
 
     super.initState();
   }
@@ -75,10 +87,17 @@ class _StartScreenState extends State<StartScreen> {
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       Center(
-                          child: ProgressTrackingButton(
-                        applicationBlock: applicationBlock,
-                        press: () {},
-                      )),
+                        child: ProgressTrackingButton(
+                          applicationBlock: applicationBlock,
+                          press: () {},
+                        ),
+                      ),
+                      (!applicationBlock.currentPositionFound &&
+                              !applicationBlock.selectedPositionFound)
+                          ? CircularProgressIndicator()
+                          : GoogleMapsStartPage(
+                              applicationBlock: applicationBlock,
+                              mapController: _mapController)
                     ],
                   ),
                 ),
@@ -88,5 +107,27 @@ class _StartScreenState extends State<StartScreen> {
         ],
       ),
     );
+  }
+
+  // Move Google Maps to inputted place
+  Future<void> _goToPlace(Place place) async {
+    final GoogleMapController controller = await _mapController.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(
+          place.geometry.location.lat,
+          place.geometry.location.lng,
+        ),
+        zoom: 14)));
+  }
+
+  // Move Google Maps to inputted place
+  Future<void> _goToPosition(Position position) async {
+    final GoogleMapController controller = await _mapController.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(
+          position.latitude,
+          position.longitude,
+        ),
+        zoom: 14)));
   }
 }

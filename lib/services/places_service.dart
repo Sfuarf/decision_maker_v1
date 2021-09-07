@@ -37,6 +37,8 @@ class PlacesService {
     Uri url = Uri.parse(
         'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$key');
 
+    print(url.toString());
+
     var response = await http.get(url);
     var json = convert.jsonDecode(response.body);
     var jsonResult = json['result'] as Map<String, dynamic>;

@@ -64,7 +64,16 @@ class LocationSearchBar extends StatelessWidget {
                                       .searchResults[index].description,
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  applicationBlock.setSelectedLocation(
+                                      applicationBlock
+                                          .searchResults[index].placeId);
+                                  placeTypeSearch.clear();
+                                  applicationBlock.placesService.validResult =
+                                      false;
+                                  // Hide the keyboard when pressed!
+                                  FocusScope.of(context).unfocus();
+                                },
                               );
                             }),
                       )
