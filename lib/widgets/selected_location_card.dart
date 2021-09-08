@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:decision_maker_v1/blocks/application_block.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'hero_dialog_route.dart';
 
 class SelectNewVenue extends StatelessWidget {
@@ -61,13 +64,14 @@ class _SelectNewVenue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Completer<GoogleMapController> _mapController = Completer();
     TextStyle _headingTextStyle = TextStyle(color: Colors.black, fontSize: 25);
     TextStyle _valueTextStyle = TextStyle(color: Colors.black, fontSize: 15);
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       child: Container(
-        height: 300,
+        height: 400,
         width: double.infinity,
         child: Center(
           child: Padding(
@@ -99,11 +103,28 @@ class _SelectNewVenue extends StatelessWidget {
                         Text('Selected Venue:', style: _headingTextStyle),
                         Text(applicationBlock.selectedAttraction.name,
                             style: _valueTextStyle),
-                        Text(applicationBlock.selectedAttraction.address,
-                            style: _valueTextStyle),
                         Text('Rating', style: _headingTextStyle),
                         Text(applicationBlock.selectedAttraction.rating,
                             style: _valueTextStyle),
+                        Container(
+                          height: 200,
+                          child: GoogleMap(
+                            markers: Set<Marker>.of(applicationBlock.markers),
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                  applicationBlock
+                                      .selectedAttraction.geometry.location.lat,
+                                  applicationBlock.selectedAttraction.geometry
+                                      .location.lng),
+                              zoom: 15,
+                            ),
+                            onMapCreated: (GoogleMapController controller) {
+                              _mapController.complete(controller);
+                            },
+                            mapType: MapType.normal,
+                            myLocationButtonEnabled: true,
+                          ),
+                        )
                       ],
                     ),
                   ),
