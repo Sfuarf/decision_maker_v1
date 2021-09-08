@@ -84,7 +84,7 @@ class _StartScreenState extends State<StartScreen> {
                       ),
                       Text(
                         "Select Your Location.",
-                        style: Theme.of(context).textTheme.headline2,
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                       LocationSearchBar(
                         placeTypeSearch: _textController,

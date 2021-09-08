@@ -95,8 +95,8 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
                     ),
                   ),
                   Text(
-                    "Choose Your Venue!?",
-                    style: Theme.of(context).textTheme.headline2,
+                    "Choose Your Type of Venue!?",
+                    style: Theme.of(context).textTheme.headline3,
                   ),
                   SearchBar(placeTypeSearch: _searchQuery),
                   Expanded(
