@@ -52,7 +52,17 @@ class _GoogleMapsStartPageState extends State<GoogleMapsStartPage> {
         ),
       );
     } else {
-      return Container();
+      return Container(
+        alignment: Alignment.center,
+        height: 300.0,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/location_not_found.png'),
+            fit: BoxFit.fitWidth,
+          ),
+          shape: BoxShape.rectangle,
+        ),
+      );
     }
   }
 }

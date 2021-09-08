@@ -29,17 +29,14 @@ class SelectNewVenue extends StatelessWidget {
             return _SelectNewVenue(applicationBlock: applicationBlock);
           }));
         },
-        child: Hero(
-          tag: _heroAddTodo,
-          child: Material(
-            color: Colors.blue,
-            elevation: 2,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-            child: const Icon(
-              Icons.add_rounded,
-              size: 56,
-            ),
+        child: Material(
+          color: Colors.blue,
+          elevation: 2,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+          child: const Icon(
+            Icons.add_rounded,
+            size: 56,
           ),
         ),
       ),
@@ -48,7 +45,7 @@ class SelectNewVenue extends StatelessWidget {
 }
 
 /// Tag-value used for the add todo popup button.
-const String _heroAddTodo = 'add-selected-venue-hero';
+const String _heroOpenLoading = 'add-selected-venue-hero';
 
 // Final Results page which shows the selected place
 
@@ -65,7 +62,7 @@ class _SelectNewVenue extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Hero(
-          tag: _heroAddTodo,
+          tag: _heroOpenLoading,
           child: Material(
             color: Colors.blue,
             elevation: 2,
@@ -102,7 +99,7 @@ class _SelectNewVenueWaiting extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Hero(
-          tag: _heroAddTodo,
+          tag: _heroOpenLoading,
           child: Material(
             color: Colors.blue,
             elevation: 2,
@@ -114,7 +111,9 @@ class _SelectNewVenueWaiting extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    CircularProgressIndicator(),
+                    CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                    ),
                   ],
                 ),
               ),

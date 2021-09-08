@@ -17,7 +17,7 @@ class SearchBar extends StatelessWidget {
       child: TextField(
         controller: placeTypeSearch,
         decoration: InputDecoration(
-          hintText: "Search",
+          hintText: "Filter Options",
           icon: Icon(Icons.search),
           border: InputBorder.none,
           suffixIcon: IconButton(
