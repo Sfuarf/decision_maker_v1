@@ -56,7 +56,6 @@ class ApplicationBlock with ChangeNotifier {
   // Functions
 
   setCurrentLocation() async {
-    currentPositionFound = false;
     print('Making it here?');
 
     if (!currentPositionFound) {

@@ -28,12 +28,9 @@ class LocationSearchBar extends StatelessWidget {
               border: InputBorder.none,
               suffixIcon: IconButton(
                   onPressed: () {
-                    placeTypeSearch.clear();
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-
-                    currentFocus.unfocus();
+                    applicationBlock.setCurrentLocation();
                   },
-                  icon: Icon(Icons.clear)),
+                  icon: Icon(Icons.location_searching)),
             ),
           ),
         ),

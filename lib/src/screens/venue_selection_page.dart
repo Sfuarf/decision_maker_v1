@@ -87,7 +87,10 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
                           color: Colors.grey,
                           shape: BoxShape.circle,
                         ),
-                        child: SvgPicture.asset("assets/icons/menu.svg"),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

@@ -90,15 +90,6 @@ class _StartScreenState extends State<StartScreen> {
                         placeTypeSearch: _textController,
                         applicationBlock: applicationBlock,
                       ),
-                      Text(
-                        'OR',
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                      Center(
-                        child: ProgressTrackingButton(
-                          applicationBlock: applicationBlock,
-                        ),
-                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GoogleMapsStartPage(
