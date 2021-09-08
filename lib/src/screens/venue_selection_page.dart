@@ -3,6 +3,7 @@ import 'package:decision_maker_v1/src/screens/start_page.dart';
 import 'package:decision_maker_v1/widgets/category_card.dart';
 import 'package:decision_maker_v1/widgets/place_card.dart';
 import 'package:decision_maker_v1/widgets/search_bar.dart';
+import 'package:decision_maker_v1/widgets/selected_location_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -126,10 +127,13 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
                             ),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                          widget.applicationBlock.placeTypes = [];
+                          // widget.applicationBlock.placeTypes = [];
                         },
                         child: const Text('Find Random Location')),
-                  )
+                  ),
+                  SelectNewVenue(
+                    applicationBlock: widget.applicationBlock,
+                  ),
                 ],
               ),
             ),

@@ -122,6 +122,7 @@ class ApplicationBlock with ChangeNotifier {
 
   searchPlace() async {
     if (placeTypes.isEmpty) {
+      print('---------- MARKER ---------');
       finalSelectedDestination = '';
       finalSelectedPlaceType = '';
       return [];
