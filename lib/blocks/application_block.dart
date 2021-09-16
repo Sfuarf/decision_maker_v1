@@ -77,12 +77,12 @@ class ApplicationBlock with ChangeNotifier {
     // Define new Place (for using _goToPlace Function)
 
     currentPlace = Place(
-        name: '',
-        address: '',
-        geometry: Geometry(
-            location: Location(
-                lat: currentPosition.latitude,
-                lng: currentPosition.longitude)));
+      name: '',
+      address: '',
+      geometry: Geometry(
+          location: Location(
+              lat: currentPosition.latitude, lng: currentPosition.longitude)),
+    );
 
     intialPlace = currentPlace;
   }
@@ -121,7 +121,6 @@ class ApplicationBlock with ChangeNotifier {
 
   searchPlace() async {
     if (placeTypes.isEmpty) {
-      print('---------- MARKER ---------');
       finalSelectedDestination = '';
       finalSelectedPlaceType = '';
       return [];
@@ -151,6 +150,15 @@ class ApplicationBlock with ChangeNotifier {
 
         finalSelectedDestination = value[randomIndex].name;
         selectedAttraction = value[randomIndex];
+
+        // Make sure the selected choice is the top 'tpye' from google
+        // This will ensure relevant results are returned.
+        while (selectedAttraction.types[0] != selectedPlaceType) {
+          randomIndex = randomPlaceIndex.nextInt((value.length));
+          print('Trying New Place...');
+          finalSelectedDestination = value[randomIndex].name;
+          selectedAttraction = value[randomIndex];
+        }
 
         if (value.length > 0) {
           var newMarker =
