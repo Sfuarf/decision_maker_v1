@@ -61,7 +61,7 @@ List<PlaceCard> createPlaceCardList() {
       id: '4',
       imageTitle: 'assets/images/take_away_image.png',
       title: 'Take Away',
-      placeType: 'meal_take_away',
+      placeType: 'meal_takeaway',
       press: () {},
       selected: false,
       backGroundColor: Colors.grey,
