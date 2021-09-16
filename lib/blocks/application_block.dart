@@ -153,6 +153,7 @@ class ApplicationBlock with ChangeNotifier {
 
         // Make sure the selected choice is the top 'tpye' from google
         // This will ensure relevant results are returned.
+        // This can be a 'Premium' feature? Sort by relevancy?
         while (selectedAttraction.types[0] != selectedPlaceType) {
           randomIndex = randomPlaceIndex.nextInt((value.length));
           print('Trying New Place...');
