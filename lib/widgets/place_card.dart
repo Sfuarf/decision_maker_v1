@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+const String FOOD_DRINK = 'food_drink';
+const String ACTIVITY = 'activity';
+
 class PlaceCard {
   final String id;
   final String imageTitle;
   final String title;
   final String placeType;
   final VoidCallback press;
+  final String category;
   bool selected;
   Color backGroundColor;
 
@@ -17,6 +21,7 @@ class PlaceCard {
     required this.press,
     required this.selected,
     required this.backGroundColor,
+    required this.category,
   });
 }
 
@@ -32,6 +37,7 @@ List<PlaceCard> createPlaceCardList() {
       press: () {},
       selected: false,
       backGroundColor: Colors.grey,
+      category: FOOD_DRINK,
     ),
   );
   _list.add(
@@ -43,6 +49,7 @@ List<PlaceCard> createPlaceCardList() {
       press: () {},
       selected: false,
       backGroundColor: Colors.grey,
+      category: FOOD_DRINK,
     ),
   );
   _list.add(
@@ -54,6 +61,7 @@ List<PlaceCard> createPlaceCardList() {
       press: () {},
       selected: false,
       backGroundColor: Colors.grey,
+      category: FOOD_DRINK,
     ),
   );
   _list.add(
@@ -65,6 +73,7 @@ List<PlaceCard> createPlaceCardList() {
       press: () {},
       selected: false,
       backGroundColor: Colors.grey,
+      category: FOOD_DRINK,
     ),
   );
 
@@ -77,6 +86,21 @@ List<PlaceCard> createPlaceCardList() {
       press: () {},
       selected: false,
       backGroundColor: Colors.grey,
+      category: FOOD_DRINK,
+    ),
+  );
+
+  // ---------------------------------- Delete --------------
+  _list.add(
+    PlaceCard(
+      id: '6',
+      imageTitle: 'assets/images/cafe_icon.png',
+      title: 'Aquarium',
+      placeType: 'aquarium',
+      press: () {},
+      selected: false,
+      backGroundColor: Colors.grey,
+      category: ACTIVITY,
     ),
   );
 

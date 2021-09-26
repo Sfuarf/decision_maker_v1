@@ -100,20 +100,30 @@ class _VenueSelectionPage extends State<VenueSelectionPage> {
                   ),
                   SearchBar(placeTypeSearch: _searchQuery),
                   Expanded(
-                    child: GridView.builder(
+                    child: ListView.builder(
                       itemCount: _searchList.length,
                       itemBuilder: (context, index) {
-                        return CategoryCard(
+                        return SwitchListTile(
+                            title: Text(_searchList[index].title),
+                            value: _searchList[index].selected,
+                            secondary: Image.asset(
+                              _searchList[index].imageTitle,
+                              height: 48,
+                              width: 48,
+                            ),
+                            onChanged: (bool value) {
+                              setState(() {
+                                _searchList[index].selected = value;
+                                widget.applicationBlock.modifyPlaceType(
+                                    _searchList[index].placeType,
+                                    _searchList[index].selected);
+                              });
+                            });
+                        /*return CategoryCard(
                           placeCard: _searchList[index],
                           applicationBlock: widget.applicationBlock,
-                        );
+                        ); */
                       },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: .85,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                      ),
                     ),
                   ),
                   Container(
