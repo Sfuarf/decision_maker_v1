@@ -10,6 +10,8 @@ class LocationSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FocusNode focusNode = FocusNode();
+
     return Column(
       children: <Widget>[
         Container(
@@ -28,7 +30,10 @@ class LocationSearchBar extends StatelessWidget {
               border: InputBorder.none,
               suffixIcon: IconButton(
                   onPressed: () {
+                    focusNode.unfocus();
+                    focusNode.canRequestFocus = false;
                     applicationBlock.setCurrentLocation();
+                    focusNode.canRequestFocus = true;
                   },
                   icon: Icon(Icons.location_searching)),
             ),
